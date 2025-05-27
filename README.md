@@ -1,102 +1,129 @@
-# cnn-feature-engineering-predictive-modellingz 
-# Chest X-Ray Image Analysis for Tuberculosis Detection  
-### CNN-Based Feature Engineering & Predictive Modeling Pipeline
+# Chest X-Ray Tuberculosis Detection
 
-[![Python](https://img.shields.io/badge/python-3.8%2B-blue)]()  
-[![License](https://img.shields.io/badge/license-MIT-green)]()  
-[![Notebook](https://img.shields.io/badge/Jupyter_notebook-orange)]()
+A Convolutional Neural Network (CNN) pipeline for identifying tuberculosis (TB) in chest X-ray images.
+
+[![Python](https://img.shields.io/badge/python-3.8%2B-blue)]()  [![License: MIT](https://img.shields.io/badge/license-MIT-green)]()
 
 ---
 
 ## 🚀 Project Overview
 
-Tuberculosis (TB) remains one of the world’s deadliest infectious diseases. Early detection from chest X-rays can save lives. This project delivers a **modular**, **scalable**, **explainable** pipeline that:
+Early TB detection via chest X-ray analysis can improve patient outcomes. This repository implements a clear, extensible workflow to:
 
-- **Automatically** detects input type (images vs. tabular)  
-- Applies standard and custom **preprocessing** (resizing, normalization, augmentation)  
-- Extracts deep **CNN features** for classification  
-- Trains, tunes, and evaluates models (ResNet-based, custom CNNs)  
-- Generates **explainability** via SHAP summaries  
-- Produces end-to-end **HTML reports** and visualizations  
+1. Preprocess and augment X-ray images (resize, normalize, rotate, flip)
+2. Extract deep features using a ResNet backbone or custom CNN
+3. Train, validate, and evaluate classification models
+4. Visualize performance (accuracy, confusion matrix)
+5. Explain model predictions with SHAP
+6. Generate an HTML report with key charts
+7. Serve predictions through a FastAPI endpoint
 
 ---
 
-## 🗂️ Repository Structure
+## 📂 Repository Structure
 
-```text
-├── data/                 # Raw & processed images
-├── notebooks/            # Your analysis & experiments
-├── src/                  # Python modules
-├── models/               # Saved model checkpoints
-├── reports/              # Auto-generated analyses
-├── img/                  # Figures for README
-├── api/                  # Simple inference service
-├── environment.yml       # Conda environment
-├── requirements.txt      # pip install -r
-├── LICENSE               # MIT
-└── README.md
-1. Jupyter Notebook
-bash
-Copy
-Edit
-jupyter notebook notebooks/ChestXRay_TB_CNN_Feature_Engineering.ipynb
-Follow each section:
+```
+sravansai-10/                              # Repository root
+├── cnn-feature-engineering-and-predictive-modeling.ipynb  # Main notebook
+├── data/                                  # Raw and processed data (not tracked)
+├── img/                                   # Remote image files (optional)
+├── Confusion Matrix.png                   # Confusion matrix example
+├── Normal Image.png                       # Sample normal X-ray
+├── Normal Vs Tuberclosis.png              # Comparison image
+├── TB Image.png                           # Sample TB-positive X-ray
+├── src/                                   # Python scripts and modules
+├── models/                                # Saved model checkpoints
+├── reports/                               # Generated HTML and figures
+├── requirements.txt                       # Python dependencies
+├── LICENSE                                # MIT License
+└── README.md                              # Project documentation (this file)
+```
 
-Data Loading
+---
 
-Preprocessing & Augmentation
+## ⚙️ Installation & Setup
 
-CNN Feature Extraction
+1. **Clone the repository**
 
-Model Training & Tuning
+   ```bash
+   git clone https://github.com/your-username/sravansai-10.git
+   cd sravansai-10
+   ```
+2. **Install dependencies**
 
-Explainability (SHAP)
+   ```bash
+   pip install -r requirements.txt
+   ```
+3. **Launch the notebook**
 
-Report Generation
+   ```bash
+   jupyter notebook cnn-feature-engineering-and-predictive-modeling.ipynb
+   ```
 
-2. CLI Training
-bash
-Copy
-Edit
+---
+
+## ▶️ Usage
+
+### Training via Notebook
+
+1. Open and run each section in the Jupyter notebook:
+
+   * Data loading and preprocessing
+   * Feature extraction
+   * Model training and evaluation
+   * SHAP explainability
+   * Report generation
+
+### Training via CLI
+
+```bash
 python src/model.py \
   --data_dir data/processed \
   --epochs 25 \
   --batch_size 32 \
   --lr 1e-4 \
   --save_path models/best_model.pth
-3. API Inference
-bash
-Copy
-Edit
-uvicorn api.inference_api:app --reload
-# then POST JSON or send via curl:
-curl -X POST http://127.0.0.1:8000/predict \
-  -F "image=@./sample_images/pos_1.png"
-📊 Sample Outputs
-Training Curve	Confusion Matrix	SHAP Summary Plot
+```
 
-📈 Model Performance
-Metric	Score
-Accuracy	94.8%
-Precision	95.2%
-Recall	93.7%
-F1‐Score	94.4%
-ROC AUC	0.98
+### Inference API
 
-🔍 Comparison to SRIE (Smart Real Estate Insights Engine)
-Aspect	Your CNN Project	SRIE (Friend’s Project)
-Domain	Medical imaging (TB detection)	Real estate rent prediction
-Data Type	Chest X-ray images	Tabular (CSV)
-Pipeline Modules	CNN feature extraction, SHAP explain	EDA, regression, anomaly detection, API
-Visualization	Training curves, confusion matrix, SHAP	Price distributions, feature importance, residuals
-Serving	FastAPI inference of X-ray scans	Flask/requests API for rent prediction
-Repo Structure	notebooks, src, models, reports, img	notebooks, src_notebooks, img, API script
+1. Start the FastAPI server:
 
-🛠️ Future Improvements
-Hyperparameter tuning with Optuna
+   ```bash
+   uvicorn src.inference_api:app --reload
+   ```
+2. Send an image to the `/predict` endpoint:
 
-Add cross-validation & learning curve plots
+   ```bash
+   curl -X POST http://127.0.0.1:8000/predict \
+     -F "image=@./img/TB Image.png"
+   ```
 
-Dockerize service & deploy to cloud (AWS/GCP)
+---
 
-Extend explainability (Grad-CAM, integrated gradients) can you just rewrite everything professionally so that i can upload it in github clearly
+## 📊 Sample Results
+
+![Confusion Matrix](./Confusion%20Matrix.png)
+
+| Metric    | Score |
+| --------- | ----: |
+| Accuracy  | 94.8% |
+| Precision | 95.2% |
+| Recall    | 93.7% |
+| F1-Score  | 94.4% |
+| ROC AUC   |  0.98 |
+
+---
+
+## 🔧 Future Improvements
+
+* Hyperparameter tuning with Optuna
+* Cross-validation and learning curve plots
+* Containerize service with Docker
+* Explore Grad-CAM for deeper explainability
+
+---
+
+## 📄 License
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
