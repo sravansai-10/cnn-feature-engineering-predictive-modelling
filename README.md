@@ -1,102 +1,124 @@
-# cnn-feature-engineering-predictive-modellingz 
-# Chest X-Ray Image Analysis for Tuberculosis Detection  
-### CNN-Based Feature Engineering & Predictive Modeling Pipeline
+Chest X-Ray Tuberculosis Detection
 
-[![Python](https://img.shields.io/badge/python-3.8%2B-blue)]()  
-[![License](https://img.shields.io/badge/license-MIT-green)]()  
-[![Notebook](https://img.shields.io/badge/Jupyter_notebook-orange)]()
+This project shows how to use a Convolutional Neural Network (CNN) to find signs of tuberculosis (TB) in chest X-ray images. It’s designed to be easy to follow and extend:
 
----
+Detects whether you’re using images or tables as input
 
-## 🚀 Project Overview
+Prepares and augments images (resize, normalize, flip, rotate)
 
-Tuberculosis (TB) remains one of the world’s deadliest infectious diseases. Early detection from chest X-rays can save lives. This project delivers a **modular**, **scalable**, **explainable** pipeline that:
+Extracts features from images using ResNet or custom CNNs
 
-- **Automatically** detects input type (images vs. tabular)  
-- Applies standard and custom **preprocessing** (resizing, normalization, augmentation)  
-- Extracts deep **CNN features** for classification  
-- Trains, tunes, and evaluates models (ResNet-based, custom CNNs)  
-- Generates **explainability** via SHAP summaries  
-- Produces end-to-end **HTML reports** and visualizations  
+Trains and tests the model, then reports accuracy
 
----
+Explains model decisions with SHAP
 
-## 🗂️ Repository Structure
+Creates simple HTML reports and charts
 
-```text
-├── data/                 # Raw & processed images
-├── notebooks/            # Your analysis & experiments
-├── src/                  # Python modules
-├── models/               # Saved model checkpoints
-├── reports/              # Auto-generated analyses
-├── img/                  # Figures for README
-├── api/                  # Simple inference service
-├── environment.yml       # Conda environment
-├── requirements.txt      # pip install -r
-├── LICENSE               # MIT
-└── README.md
-1. Jupyter Notebook
-bash
-Copy
-Edit
+Includes a FastAPI-based inference service
+
+Folder Layout
+
+data/           Original and processed images
+notebooks/      Experiment notebooks
+src/            Main Python code
+models/         Saved model files
+reports/        Generated reports
+img/            Images used in the README
+api/            Inference service code (FastAPI)
+environment.yml Conda setup file
+requirements.txt Python dependencies
+LICENSE         Project license (MIT)
+README.md       This file
+
+How to Get Started
+
+Clone the repo
+
+git clone <your-repo-url>
+cd cnn-feature-engineering-predictive-modeling
+
+Install dependencies
+
+conda env create -f environment.yml
+conda activate tb_detection
+# or
+pip install -r requirements.txt
+
+Run the notebook
+
 jupyter notebook notebooks/ChestXRay_TB_CNN_Feature_Engineering.ipynb
-Follow each section:
 
-Data Loading
+Work through: data loading → preprocessing → feature extraction → training → explainability → reporting
 
-Preprocessing & Augmentation
+Train from the command line
 
-CNN Feature Extraction
-
-Model Training & Tuning
-
-Explainability (SHAP)
-
-Report Generation
-
-2. CLI Training
-bash
-Copy
-Edit
 python src/model.py \
   --data_dir data/processed \
   --epochs 25 \
   --batch_size 32 \
   --lr 1e-4 \
   --save_path models/best_model.pth
-3. API Inference
-bash
-Copy
-Edit
+
+Start the API
+
 uvicorn api.inference_api:app --reload
-# then POST JSON or send via curl:
+
+Test with:
+
 curl -X POST http://127.0.0.1:8000/predict \
   -F "image=@./sample_images/pos_1.png"
-📊 Sample Outputs
-Training Curve	Confusion Matrix	SHAP Summary Plot
 
-📈 Model Performance
-Metric	Score
-Accuracy	94.8%
-Precision	95.2%
-Recall	93.7%
-F1‐Score	94.4%
-ROC AUC	0.98
+Results Example
 
-🔍 Comparison to SRIE (Smart Real Estate Insights Engine)
-Aspect	Your CNN Project	SRIE (Friend’s Project)
-Domain	Medical imaging (TB detection)	Real estate rent prediction
-Data Type	Chest X-ray images	Tabular (CSV)
-Pipeline Modules	CNN feature extraction, SHAP explain	EDA, regression, anomaly detection, API
-Visualization	Training curves, confusion matrix, SHAP	Price distributions, feature importance, residuals
-Serving	FastAPI inference of X-ray scans	Flask/requests API for rent prediction
-Repo Structure	notebooks, src, models, reports, img	notebooks, src_notebooks, img, API script
+Metric
 
-🛠️ Future Improvements
-Hyperparameter tuning with Optuna
+Score
 
-Add cross-validation & learning curve plots
+Accuracy
 
-Dockerize service & deploy to cloud (AWS/GCP)
+94.8%
 
-Extend explainability (Grad-CAM, integrated gradients)
+Precision
+
+95.2%
+
+Recall
+
+93.7%
+
+F1-Score
+
+94.4%
+
+ROC AUC
+
+0.98
+
+You’ll also find:
+
+Training and validation loss plots
+
+Confusion matrix
+
+SHAP feature importance plot
+
+Comparison with a Friend’s Project
+
+This project: TB detection using chest X-rays and CNNs
+
+Friend’s project: Real estate price prediction on tabular data
+
+Both have clear folder layouts and API services, but this one focuses on images and explainability.
+
+What’s Next
+
+Add hyperparameter tuning with Optuna
+
+Include cross-validation and learning curve charts
+
+Dockerize the API for easy deployment
+
+Try other explainability methods like Grad-CAM
+
+© 2025 Your Name • MIT License
+
